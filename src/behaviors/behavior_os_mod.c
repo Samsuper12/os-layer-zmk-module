@@ -23,7 +23,7 @@ struct behavior_os_mod_config {
 };
 
 static void queue_os(const struct zmk_behavior_binding bindings[],
-                     struct zmk_behavior_binding_event event, bool press,
+                     struct zmk_behavior_binding_event *event, bool press,
                      int count) {
   const enum zmk_os_type current_os = zmk_get_preferred_os_type();
 
@@ -39,7 +39,7 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
   const struct device *dev = zmk_behavior_get_binding(binding->behavior_dev);
   const struct behavior_os_mod_config *cfg = dev->config;
-  queue_os(cfg->bindings, event, true, cfg->count);
+  queue_os(cfg->bindings, &event, true, cfg->count);
   return ZMK_BEHAVIOR_OPAQUE;
 }
 
@@ -47,7 +47,7 @@ static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
                                       struct zmk_behavior_binding_event event) {
   const struct device *dev = zmk_behavior_get_binding(binding->behavior_dev);
   const struct behavior_os_mod_config *cfg = dev->config;
-  queue_os(cfg->bindings, event, true, cfg->count);
+  queue_os(cfg->bindings, &event, true, cfg->count);
   return ZMK_BEHAVIOR_OPAQUE;
 }
 
