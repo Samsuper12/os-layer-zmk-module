@@ -7,6 +7,7 @@
 #pragma once
 
 #include <zephyr/kernel.h>
+#include <zmk/event_manager.h>
 #include <zmk/os_detector.h>
 
 struct zmk_preferred_os_state_changed {
