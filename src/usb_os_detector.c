@@ -56,7 +56,7 @@ static int os_type_handle_set(const char *name, size_t len,
       return -EINVAL;
     }
 
-    int err = read_cb(cb_arg, &preferred_os, sizeof(enum zmk_os_type));
+    int err = read_cb(cb_arg, &preferred_os_type, sizeof(preferred_os_type));
     if (err <= 0) {
       LOG_ERR("Failed to read preferred os type from settings (err %d)", err);
       return err;
