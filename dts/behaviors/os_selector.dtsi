@@ -1,0 +1,15 @@
+/*
+ * Copyright (c) 2025 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/ {
+    behaviors {
+        os_sel: os_sel{
+            compatible = "zmk,behavior-os-selector";
+            #binding-cells = <2>;
+            display-name = "OS sel";
+        };
+    };
+};

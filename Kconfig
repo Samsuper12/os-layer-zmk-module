@@ -1,0 +1,11 @@
+config ZMK_PREFERRED_OS_LINUX
+    bool
+
+config ZMK_PREFERRED_OS_MAC
+    bool
+
+config ZMK_PREFERRED_OS_WIN
+    bool
+
+config ZMK_DETECT_HOST_OS
+    bool
