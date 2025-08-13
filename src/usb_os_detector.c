@@ -9,6 +9,7 @@
 #include <zephyr/usb/usb_ch9.h>
 #include <zephyr/usb/usb_device.h>
 
+#include <zephyr/settings/settings.h>
 #include <zmk/events/preferred_os_state_changed.h>
 #include <zmk/os_detector.h>
 
