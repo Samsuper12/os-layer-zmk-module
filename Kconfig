@@ -1,11 +1,18 @@
 config ZMK_PREFERRED_OS_LINUX
-    bool
+    bool "something"
+    default n
+
 
 config ZMK_PREFERRED_OS_MAC
-    bool
+    bool "something"
+    default n
+
 
 config ZMK_PREFERRED_OS_WIN
-    bool
+    bool "something"
+    default n
+
 
 config ZMK_DETECT_HOST_OS
-    bool
+    bool "something"
+    default n
