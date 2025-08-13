@@ -9,6 +9,7 @@
 #include <drivers/behavior.h>
 #include <zephyr/device.h>
 #include <zephyr/logging/log.h>
+#include <zmk/behavior_queue.h>
 
 #include <dt-bindings/zmk/os_detector_defines.h>
 #include <zmk/keymap.h>
@@ -21,7 +22,7 @@ struct behavior_os_mod_config {
   struct zmk_behavior_binding bindings[];
 };
 
-static void queue_os(struct zmk_behavior_binding bindings[],
+static void queue_os(const struct zmk_behavior_binding bindings[],
                      struct zmk_behavior_binding_event event, bool press,
                      int count) {
   const enum zmk_os_type current_os = zmk_get_preferred_os_type();
@@ -63,7 +64,7 @@ static const struct behavior_driver_api behavior_os_mod_driver_api = {
       .count = DT_PROP_LEN(inst, bindings),                                    \
       .bindings = TRANSFORMED_BEHAVIORS(inst)};                                \
   BEHAVIOR_DT_INST_DEFINE(                                                     \
-      inst, NULL, NULL, NULL, &behavior_dynamic_config_##inst, POST_KERNEL,    \
-      CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &behavior_dynamic_driver_api);
+      inst, NULL, NULL, NULL, &behavior_os_mod_config_##inst, POST_KERNEL,     \
+      CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &behavior_os_mod_driver_api);
 
 DT_INST_FOREACH_STATUS_OKAY(DYN_INST)

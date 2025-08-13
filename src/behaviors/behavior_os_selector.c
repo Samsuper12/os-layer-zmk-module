@@ -27,33 +27,33 @@ static int on_keymap_binding_convert_central_state_dependent_params(
     zmk_cycle_preferred_os_type(+1);
 
     binding->param1 = OS_SET_CMD;
-    binding->param2 = zmk_get_preferred_os_type(void);
+    binding->param2 = zmk_get_preferred_os_type();
     break;
   }
   case GO_PREV_OS_CMD: {
     zmk_cycle_preferred_os_type(-1);
 
     binding->param1 = OS_SET_CMD;
-    binding->param2 = zmk_get_preferred_os_type(void);
+    binding->param2 = zmk_get_preferred_os_type();
     break;
   }
 
   case KP_OS_LINUX: {
     zmk_select_preferred_os_type(ZMK_OS_LINUX);
     binding->param1 = OS_SET_CMD;
-    binding->param2 = zmk_get_preferred_os_type(void);
+    binding->param2 = zmk_get_preferred_os_type();
     break;
   }
   case KP_OS_MAC: {
     zmk_select_preferred_os_type(ZMK_OS_MAC);
     binding->param1 = OS_SET_CMD;
-    binding->param2 = zmk_get_preferred_os_type(void);
+    binding->param2 = zmk_get_preferred_os_type();
     break;
   }
   case KP_OS_WIN: {
     zmk_select_preferred_os_type(ZMK_OS_WIN);
     binding->param1 = OS_SET_CMD;
-    binding->param2 = zmk_get_preferred_os_type(void);
+    binding->param2 = zmk_get_preferred_os_type();
     break;
   }
   default:
