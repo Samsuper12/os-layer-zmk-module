@@ -13,7 +13,7 @@
 #include <zmk/events/preferred_os_state_changed.h>
 #include <zmk/os_detector.h>
 
-LOG_MODULE_REGISTER(zmk, LOG_LEVEL_DBG);
+LOG_MODULE_REGISTER(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #if IS_ENABLED(CONFIG_ZMK_PREFERRED_OS_LINUX)
 static enum zmk_os_type preferred_os_type = ZMK_OS_LINUX;
