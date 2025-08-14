@@ -60,13 +60,16 @@ static int on_keymap_binding_convert_central_state_dependent_params(
 static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
 
+  /*
+    case GO_NEXT_OS_CMD:
+return zmk_select_preferred_os_type(zmk_calc_next_os_type(+1));
+case GO_PREV_OS_CMD:
+return zmk_select_preferred_os_type(zmk_calc_next_os_type(-1));
+*/
+
   LOG_DBG("binding->param1: %i, binding->param2: %i ", binding->param1,
           binding->param2);
   switch (binding->param1) {
-  case GO_NEXT_OS_CMD:
-    return zmk_select_preferred_os_type(zmk_calc_next_os_type(+1));
-  case GO_PREV_OS_CMD:
-    return zmk_select_preferred_os_type(zmk_calc_next_os_type(-1));
   case KP_OS_LINUX:
     return zmk_select_preferred_os_type(ZMK_OS_LINUX);
   case KP_OS_MAC:
