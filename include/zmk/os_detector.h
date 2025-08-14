@@ -12,6 +12,6 @@ enum zmk_os_type {
   ZMK_OS_WIN,
 };
 
-int zmk_select_preferred_os_type(const enum zmk_os_type);
-int zmk_cycle_preferred_os_type(int);
+int zmk_select_preferred_os_type(enum zmk_os_type);
+int zmk_calc_next_os_type(int);
 enum zmk_os_type zmk_get_preferred_os_type(void);

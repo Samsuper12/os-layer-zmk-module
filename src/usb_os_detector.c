@@ -83,20 +83,14 @@ int zmk_select_preferred_os_type(enum zmk_os_type os) {
 
 enum zmk_os_type zmk_get_preferred_os_type(void) { return preferred_os_type; }
 
-int zmk_cycle_preferred_os_type(int i) {
+int zmk_calc_next_os_type(int i) {
   if ((preferred_os_type + i) > ZMK_OS_WIN) {
-    preferred_os_type = ZMK_OS_LINUX;
+    return ZMK_OS_LINUX;
   } else if ((preferred_os_type + i) < ZMK_OS_LINUX) {
-    preferred_os_type = ZMK_OS_WIN;
-  } else {
-    preferred_os_type++;
+    return ZMK_OS_WIN;
   }
 
-  os_type_save_preferred();
-
-  raise_zmk_preferred_os_state_changed(
-      (struct zmk_preferred_os_state_changed){.os = preferred_os_type});
-  return 0;
+  return preferred_os_type + i;
 }
 
 /*
