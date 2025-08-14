@@ -60,11 +60,16 @@ static int on_keymap_binding_convert_central_state_dependent_params(
     return 0;
   }
 
+  LOG_DBG("zmk_get_preferred_os_type: %i", zmk_get_preferred_os_type());
+
   return 0;
 };
 
 static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
+
+  LOG_DBG("binding->param1: %i, binding->param2: %i ", binding->param1,
+          binding->param2);
   switch (binding->param1) {
   case GO_NEXT_OS_CMD:
     return zmk_cycle_preferred_os_type(+1);
