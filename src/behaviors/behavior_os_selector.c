@@ -64,9 +64,9 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
           binding->param2);
   switch (binding->param1) {
   case GO_NEXT_OS_CMD:
-    return zmk_cycle_preferred_os_type(+1);
+    return zmk_select_preferred_os_type(zmk_calc_next_os_type(+1));
   case GO_PREV_OS_CMD:
-    return zmk_cycle_preferred_os_type(-1);
+    return zmk_select_preferred_os_type(zmk_calc_next_os_type(-1));
   case KP_OS_LINUX:
     return zmk_select_preferred_os_type(ZMK_OS_LINUX);
   case KP_OS_MAC:
