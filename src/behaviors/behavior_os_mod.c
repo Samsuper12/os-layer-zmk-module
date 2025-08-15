@@ -64,7 +64,7 @@ static const struct behavior_driver_api behavior_os_mod_driver_api = {
           DT_INST_PHA_HAS_CELL_AT_IDX(node, bindings, idx, param1), (0),       \
           (DT_INST_PHA_BY_IDX(node, bindings, idx, param1))),                  \
       .param2 = COND_CODE_0(                                                   \
-          DT_INST_PHA_HAS_CELL_AT_IDX(node, bindings, idx, param1), (0),       \
+          DT_INST_PHA_HAS_CELL_AT_IDX(node, bindings, idx, param2), (0),       \
           (DT_INST_PHA_BY_IDX(node, bindings, idx, param2))),                  \
   }
 
