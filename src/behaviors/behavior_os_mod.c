@@ -81,4 +81,4 @@ static const struct behavior_driver_api behavior_os_mod_driver_api = {
       inst, NULL, NULL, NULL, &behavior_os_mod_config_##inst, POST_KERNEL,     \
       CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &behavior_os_mod_driver_api);
 
-DT_FOREACH_STATUS_OKAY(zmk_behavior_os_mod_two_param, DYN_INST)
+DT_FOREACH_STATUS_OKAY(zmk_behavior_os_mod_one_param, DYN_INST)
