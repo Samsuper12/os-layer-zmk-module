@@ -69,8 +69,7 @@ static const struct behavior_driver_api behavior_os_mod_driver_api = {
   }
 
 #define TRANSFORMED_BEHAVIORS(n)                                               \
-  {LISTIFY(DT_INST_PROP_LEN(n, bindings), ZMK_KEYMAP_EXTRACT_BINDING2, (, ),   \
-           n)},
+  {LISTIFY(DT_INST_PROP_LEN(n, bindings), ZMK_KEYMAP_EXTRACT_BINDING2, (, ), n)}
 
 #define DYN_INST(inst)                                                         \
   static struct behavior_os_mod_config behavior_os_mod_config_##inst = {       \
