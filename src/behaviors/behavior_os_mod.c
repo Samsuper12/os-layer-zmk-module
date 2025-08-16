@@ -30,6 +30,8 @@ static void queue_os(const struct zmk_behavior_binding bindings[],
   for (size_t i = 0; i < count; ++i) {
     struct zmk_behavior_binding binding = bindings[i];
     if (binding.param2 == current_os) {
+      LOG_DBG("New OS-Mod event. param1: %i, param2: %i. Press? %i",
+              binding->param1, binding->param2, press);
       zmk_behavior_queue_add(event, binding, press, 15);
     }
   }
