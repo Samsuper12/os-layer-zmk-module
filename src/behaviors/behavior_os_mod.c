@@ -65,7 +65,7 @@ static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
                                       struct zmk_behavior_binding_event event) {
   const struct device *dev = zmk_behavior_get_binding(binding->behavior_dev);
   struct behavior_os_mod_data *data = dev->data;
-  zmk_behavior_invoke_binding(data->pressed_binding, event, true);
+  zmk_behavior_invoke_binding(data->pressed_binding, event, false);
   data->pressed_binding = NULL;
 
   return ZMK_BEHAVIOR_OPAQUE;
