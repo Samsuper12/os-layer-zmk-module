@@ -1,0 +1,7 @@
+# Copyright (c) 2025 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+description: Choose OS behavior
+
+compatible: "zmk,os-choose"
+
+include: one_param.yaml

@@ -17,22 +17,37 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
+#define OS_CHOOSE_MODE DEVICE_DT_NAME(DT_INST(0, zmk_os_choose))
+#define IS_CHOOSE_MODE(dev) ZM_IS_NODE_MATCH(dev, OS_CHOOSE_MODE)
+
 struct behavior_os_mod_config {
   uint32_t count;
   struct zmk_behavior_binding bindings[];
 };
 
-static void queue_os(const struct zmk_behavior_binding bindings[],
-                     struct zmk_behavior_binding_event *event, bool press,
-                     int count) {
-  const enum zmk_os_type current_os = zmk_get_preferred_os_type();
+struct behavior_os_mod_data {
+  struct zmk_behavior_binding *pressed_binding;
+};
 
-  for (size_t i = 0; i < count; ++i) {
-    struct zmk_behavior_binding binding = bindings[i];
-    if (binding.param2 == current_os) {
-      LOG_DBG("New OS-Mod event. param1: %i, param2: %i. Press? %i",
-              binding.param1, binding.param2, press);
-      zmk_behavior_queue_add(event, binding, press, 15);
+static void query_bindings(struct zmk_behavior_binding bindings[],
+                           int bindings_count,
+                           struct zmk_behavior_binding_event event,
+                           struct behavior_os_mod_data *data) {
+  const enum zmk_os_type preferred_os = zmk_get_preferred_os_type();
+  enum zmk_os_type selected_os = 0;
+  bool os_mode_found = false;
+
+  for (size_t i = 0; i < bindings_count; ++i) {
+    struct zmk_behavior_binding *binding = &bindings[i];
+    if (IS_CHOOSE_MODE(binding->behavior_dev)) {
+      selected_os = binding->param1;
+      os_mode_found = true;
+      continue;
+    }
+
+    if (os_mode_found && selected_os == preferred_os) {
+      data->pressed_binding = binding;
+      zmk_behavior_invoke_binding(binding, event, true);
     }
   }
 }
@@ -41,15 +56,18 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
   const struct device *dev = zmk_behavior_get_binding(binding->behavior_dev);
   const struct behavior_os_mod_config *cfg = dev->config;
-  queue_os(cfg->bindings, &event, true, cfg->count);
+  struct behavior_os_mod_data *data = dev->data;
+  query_bindings(cfg->bindings, cfg->count, event, data);
   return ZMK_BEHAVIOR_OPAQUE;
 }
 
 static int on_keymap_binding_released(struct zmk_behavior_binding *binding,
                                       struct zmk_behavior_binding_event event) {
   const struct device *dev = zmk_behavior_get_binding(binding->behavior_dev);
-  const struct behavior_os_mod_config *cfg = dev->config;
-  queue_os(cfg->bindings, &event, true, cfg->count);
+  struct behavior_os_mod_data *data = dev->data;
+  zmk_behavior_invoke_binding(data->pressed_binding, event, true);
+  data->pressed_binding = NULL;
+
   return ZMK_BEHAVIOR_OPAQUE;
 }
 
@@ -71,14 +89,16 @@ static const struct behavior_driver_api behavior_os_mod_driver_api = {
   }
 
 #define TRANSFORMED_BEHAVIORS(n)                                               \
-  {LISTIFY(DT_PROP_LEN(n, bindings), ZMK_KEYMAP_EXTRACT_BINDING, (, ), n)}
+  {LISTIFY(DT_INST_PROP_LEN(n, bindings), ZMK_KEYMAP_EXTRACT_BINDING2, (, ), n)}
 
-#define DYN_INST(inst)                                                         \
-  static struct behavior_os_mod_config behavior_os_mod_config_##inst = {       \
-      .count = DT_PROP_LEN(inst, bindings),                                    \
-      .bindings = TRANSFORMED_BEHAVIORS(inst)};                                \
-  BEHAVIOR_DT_INST_DEFINE(                                                     \
-      inst, NULL, NULL, NULL, &behavior_os_mod_config_##inst, POST_KERNEL,     \
-      CONFIG_KERNEL_INIT_PRIORITY_DEFAULT, &behavior_os_mod_driver_api);
+#define OS_INST(n)                                                             \
+  static struct behavior_os_mod_config behavior_os_mod_config_##n = {          \
+      .count = DT_INST_PROP_LEN(n, bindings),                                  \
+      .bindings = TRANSFORMED_BEHAVIORS(n)};                                   \
+  static struct behavior_os_mod_data behavior_os_mod_config_##n = {};          \
+  BEHAVIOR_DT_INST_DEFINE(n, NULL, NULL, &behavior_os_mod_data_##n,            \
+                          &behavior_os_mod_config_##n, POST_KERNEL,            \
+                          CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,                 \
+                          &behavior_os_mod_driver_api);
 
-DT_FOREACH_STATUS_OKAY(zmk_behavior_os_mod_one_param, DYN_INST)
+DT_INST_FOREACH_STATUS_OKAY(OS_INST)

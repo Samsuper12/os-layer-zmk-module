@@ -6,9 +6,9 @@
 
 / {
     behaviors {
-        os_sel: os_sel{
-            compatible = "zmk,behavior-os-selector";
-            #binding-cells = <2>;
+        os_choose: os_choose{
+            compatible = "zmk,os-choose";
+            #binding-cells = <1>;
         };
     };
 };
