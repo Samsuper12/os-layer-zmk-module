@@ -95,7 +95,7 @@ static const struct behavior_driver_api behavior_os_mod_driver_api = {
   static struct behavior_os_mod_config behavior_os_mod_config_##n = {          \
       .count = DT_INST_PROP_LEN(n, bindings),                                  \
       .bindings = TRANSFORMED_BEHAVIORS(n)};                                   \
-  static struct behavior_os_mod_data behavior_os_mod_config_##n = {};          \
+  static struct behavior_os_mod_data behavior_os_mod_data_##n = {};          \
   BEHAVIOR_DT_INST_DEFINE(n, NULL, NULL, &behavior_os_mod_data_##n,            \
                           &behavior_os_mod_config_##n, POST_KERNEL,            \
                           CONFIG_KERNEL_INIT_PRIORITY_DEFAULT,                 \
