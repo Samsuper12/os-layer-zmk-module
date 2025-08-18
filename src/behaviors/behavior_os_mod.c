@@ -18,6 +18,7 @@
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #define OS_CHOOSE_MODE DEVICE_DT_NAME(DT_INST(0, zmk_os_choose))
+#define ZM_IS_NODE_MATCH(a, b) (strcmp(a, b) == 0)
 #define IS_CHOOSE_MODE(dev) ZM_IS_NODE_MATCH(dev, OS_CHOOSE_MODE)
 
 struct behavior_os_mod_config {
