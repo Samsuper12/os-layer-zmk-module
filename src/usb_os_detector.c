@@ -93,37 +93,12 @@ int zmk_calc_next_os_type(int i) {
   return preferred_os_type + i;
 }
 
-/*
-static int my_control_handler(struct usb_setup_packet *setup, int32_t *len,
-                              uint8_t **data) {
-
-#if IS_ENABLED(CONFIG_SETTINGS)
-  k_work_init_delayable(&os_type_save_work, os_type_save_preferred_work);
-#endif
-
-  LOG_INF("USB control: bRequest=0x%02x wLength=%u", setup->bRequest,
-          setup->wLength);
-
-  // You can act only on vendor requests, for example:
-  if ((setup->bmRequestType & USB_REQTYPE_TYPE_MASK) == USB_REQTYPE_VENDOR) {
-    // Do something with wLength...
-    return 0; // 0 = handled
-  }
-
-  return -ENOTSUP; // pass to other handlers
-}
-
-*/
-
 static int zmk_usb_os_detector_init(void) {
 #if IS_ENABLED(CONFIG_SETTINGS)
   k_work_init_delayable(&os_type_save_work, os_type_save_preferred_work);
 #endif
 
-  // Register handler after USB is ready
-  // usb_ep_register_request_handler(USB_CONTROL_EP_IN, my_control_handler,
-  // NULL); usb_ep_register_request_handler(USB_CONTROL_EP_OUT,
-  // my_control_handler, NULL);
+  // TODO: make fake HID; read wLength. Destroy fake HID.
   return 0;
 }
 
