@@ -1,7 +1,7 @@
 # Delete all unused properties.
 
 # Give your module a name
-name: os-detector-behavior-zmk-module
+name: os-layer-zmk-module
 build:
   cmake: .
   # Kconfig filepath
