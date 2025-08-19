@@ -8,7 +8,7 @@
 
 #include <zephyr/kernel.h>
 #include <zmk/event_manager.h>
-#include <zmk/os_detector.h>
+#include <zmk/os_layer.h>
 
 struct zmk_preferred_os_state_changed {
   enum zmk_os_type os;

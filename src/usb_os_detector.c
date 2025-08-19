@@ -11,7 +11,7 @@
 
 #include <zephyr/settings/settings.h>
 #include <zmk/events/preferred_os_state_changed.h>
-#include <zmk/os_detector.h>
+#include <zmk/os_layer.h>
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 

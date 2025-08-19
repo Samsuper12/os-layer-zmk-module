@@ -13,7 +13,7 @@
 
 #include <dt-bindings/zmk/os_layer_defines.h>
 #include <zmk/keymap.h>
-#include <zmk/os_detector.h>
+#include <zmk/os_layer.h>
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
