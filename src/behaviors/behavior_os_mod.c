@@ -11,7 +11,7 @@
 #include <zephyr/logging/log.h>
 #include <zmk/behavior_queue.h>
 
-#include <dt-bindings/zmk/os_detector_defines.h>
+#include <dt-bindings/zmk/os_layer_defines.h>
 #include <zmk/keymap.h>
 #include <zmk/os_detector.h>
 

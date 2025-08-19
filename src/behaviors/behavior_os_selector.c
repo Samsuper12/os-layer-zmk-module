@@ -10,7 +10,7 @@
 #include <zephyr/device.h>
 #include <zephyr/logging/log.h>
 
-#include <dt-bindings/zmk/os_detector_defines.h>
+#include <dt-bindings/zmk/os_layers_defines.h>
 #include <zmk/keymap.h>
 #include <zmk/os_detector.h>
 
