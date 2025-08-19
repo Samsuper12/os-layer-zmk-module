@@ -1,0 +1,8 @@
+/*
+ * Copyright (c) 2025 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors/os_choose.dtsi>
+#include <behaviors/os_selector.dtsi>

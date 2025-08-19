@@ -6,7 +6,7 @@
 
 / {
     behaviors {
-        os_sel: os_sel{
+        os_sel: os_sel {
             compatible = "zmk,behavior-os-selector";
             #binding-cells = <2>;
         };
