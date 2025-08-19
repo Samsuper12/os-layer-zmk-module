@@ -42,15 +42,38 @@ static void query_bindings(const struct zmk_behavior_binding bindings[],
     struct zmk_behavior_binding *binding = &bindings[i];
     if (IS_CHOOSE_MODE(binding->behavior_dev)) {
       selected_os = binding->param1;
-      os_mode_found = true;
+      os_mode_found = binding->param1 != KP_OS_OTHER ? true : false;
       continue;
     }
 
     if (os_mode_found && selected_os == preferred_os) {
       data->pressed_binding = binding;
       zmk_behavior_invoke_binding(binding, event, true);
+      return;
+    }
+    os_mode_found = false;
+  }
+
+  // No match. KP_OS_OTHER in a deal now.
+  if (data->pressed_binding == NULL) {
+    os_mode_found = false;
+
+    for (size_t i = 0; i < bindings_count; ++i) {
+      struct zmk_behavior_binding *binding = &bindings[i];
+      if (IS_CHOOSE_MODE(binding->behavior_dev)) {
+        os_mode_found = binding->param1 == KP_OS_OTHER ? true : false;
+        continue;
+      }
+
+      if (os_mode_found) {
+        data->pressed_binding = binding;
+        zmk_behavior_invoke_binding(binding, event, true);
+        return;
+      }
     }
   }
+
+  LOG_DBG("Found no match. Not even KP_OS_OTHER!");
 }
 
 static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,

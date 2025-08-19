@@ -8,9 +8,11 @@
 #define KP_OS_MAC 1
 #define KP_OS_WIN 2
 
-#define GO_NEXT_OS_CMD 3
-#define GO_PREV_OS_CMD 4
-#define OS_SET_CMD 5
+#define KP_OS_OTHER 20
+
+#define GO_NEXT_OS_CMD 100
+#define GO_PREV_OS_CMD 101
+#define OS_SET_CMD 102
 
 #define GO_NEXT_OS GO_NEXT_OS_CMD 0
 #define GO_PREV_OS GO_PREV_OS_CMD 0

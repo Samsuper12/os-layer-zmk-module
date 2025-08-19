@@ -15,15 +15,7 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-#if IS_ENABLED(CONFIG_ZMK_PREFERRED_OS_LINUX)
-static enum zmk_os_type preferred_os_type = ZMK_OS_LINUX;
-#elif IS_ENABLED(CONFIG_ZMK_PREFERRED_OS_MAC)
-static enum zmk_os_type preferred_os_type = ZMK_OS_MAC;
-#elif IS_ENABLED(CONFIG_ZMK_PREFERRED_OS_WIN)
-static enum zmk_os_type preferred_os_type = ZMK_OS_WIN;
-#else
-#error "Set a default OS"
-#endif
+static enum zmk_os_type preferred_os_type = ZMK_OS_OTHER;
 
 #if IS_ENABLED(CONFIG_SETTINGS)
 static void os_type_save_preferred_work(struct k_work *work) {
