@@ -90,7 +90,10 @@ static int zmk_usb_os_detector_init(void) {
   k_work_init_delayable(&os_type_save_work, os_type_save_preferred_work);
 #endif
 
+#if IS_ENABLED(CONFIG_ZMK_OS_LAYER_DETECT_VIA_USB)
   // TODO: make fake HID; read wLength. Destroy fake HID.
+#endif
+
   return 0;
 }
 

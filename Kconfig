@@ -1,0 +1,3 @@
+config ZMK_OS_LAYER_DETECT_VIA_USB
+    bool "It will attempt to detect the host operating system via USB"
+    default n
