@@ -7,10 +7,9 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/util.h>
-#include <zephyr/usb/class/usbd_hid.h>
+#include <zephyr/usb/class/hid.h>
 #include <zephyr/usb/usb_ch9.h>
 #include <zephyr/usb/usb_device.h>
-#include <zephyr/usb/usbd.h>
 
 #include <zephyr/settings/settings.h>
 #include <zmk/events/preferred_os_state_changed.h>
