@@ -10,6 +10,7 @@
 #include <zephyr/usb/class/hid.h>
 #include <zephyr/usb/usb_ch9.h>
 #include <zephyr/usb/usb_device.h>
+#include <zmk/hid.h>
 
 #include <zephyr/settings/settings.h>
 #include <zmk/events/preferred_os_state_changed.h>
@@ -91,7 +92,6 @@ int zmk_calc_next_os_type(int i) {
 
 static bool fake_hid_shutdown = false;
 static bool fake_hid_ready = false;
-static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(2);
 
 static void fake_iface_ready(const struct device *dev, const bool ready) {
   LOG_INF("Fake HID device %s interface is %s", dev->name,
@@ -128,8 +128,8 @@ static int zmk_usb_os_detector_init(void) {
     return -EIO;
   }
 
-  ret = hid_device_register(hid_dev, hid_report_desc, sizeof(hid_report_desc),
-                            &fake_ops);
+  ret = hid_device_register(hid_dev, zmk_hid_report_desc,
+                            sizeof(zmk_hid_report_desc), &fake_ops);
   if (ret != 0) {
     LOG_ERR("Failed to register HID Device, %d", ret);
     return ret;
