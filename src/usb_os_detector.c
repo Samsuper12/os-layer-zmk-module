@@ -85,13 +85,65 @@ int zmk_calc_next_os_type(int i) {
   return preferred_os_type + i;
 }
 
+//-----------------------------------------------------------------------------//
+
+static bool fake_hid_shutdown = false;
+static bool fake_hid_ready = false;
+static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(2);
+
+static void fake_iface_ready(const struct device *dev, const bool ready) {
+  LOG_INF("Fake HID device %s interface is %s", dev->name,
+          ready ? "ready" : "not ready");
+  fake_hid_ready = ready;
+}
+
+static int fake_get_report(const struct device *dev, const uint8_t type,
+                           const uint8_t id, const uint16_t len,
+                           uint8_t *const buf) {
+
+  LOG_DBG("HID Report.");
+
+  return 0;
+}
+
+struct hid_device_ops fake_ops = {
+    .iface_ready = fake_iface_ready,
+    .get_report = fake_get_report,
+};
+
 static int zmk_usb_os_detector_init(void) {
 #if IS_ENABLED(CONFIG_SETTINGS)
   k_work_init_delayable(&os_type_save_work, os_type_save_preferred_work);
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_OS_LAYER_DETECT_VIA_USB)
-  // TODO: make fake HID; read wLength. Destroy fake HID.
+  const struct device *hid_dev;
+  int ret;
+
+  hid_dev = DEVICE_DT_GET_ONE(zephyr_hid_device);
+  if (!device_is_ready(hid_dev)) {
+    LOG_ERR("HID Device is not ready");
+    return -EIO;
+  }
+
+  ret = hid_device_register(hid_dev, hid_report_desc, sizeof(hid_report_desc),
+                            &fake_ops);
+  if (ret != 0) {
+    LOG_ERR("Failed to register HID Device, %d", ret);
+    return ret;
+  }
+
+  while (true) {
+    if (fake_hid_shutdown) {
+      break;
+    }
+
+    if (!fake_hid_ready) {
+      LOG_DBG("USB HID device is not ready");
+      continue;
+    }
+  }
+
 #endif
 
   return 0;
