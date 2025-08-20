@@ -8,6 +8,7 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/util.h>
 #include <zephyr/usb/class/hid.h>
+#include <zephyr/usb/class/usbd_hid.h>
 #include <zephyr/usb/usb_ch9.h>
 #include <zephyr/usb/usb_device.h>
 #include <zmk/hid.h>
