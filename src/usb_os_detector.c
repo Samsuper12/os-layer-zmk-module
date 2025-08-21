@@ -135,7 +135,7 @@ static int get_report_cb(const struct device *dev,
   return 0;
 }
 
-struct hid_ops fake_ops = {
+static struct hid_ops fake_ops = {
     .get_report = get_report_cb,
 };
 
