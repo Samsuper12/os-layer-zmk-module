@@ -92,21 +92,21 @@ int zmk_calc_next_os_type(int i) {
 
 //-----------------------------------------------------------------------------//
 
-static bool fake_hid_shutdown = false;
+//static bool fake_hid_shutdown = false;
 //static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(2);
 
-static int get_report_cb(const struct device *dev,
-                         struct usb_setup_packet *setup, int32_t *len,
-                         uint8_t **data) {
+// static int get_report_cb(const struct device *dev,
+//                          struct usb_setup_packet *setup, int32_t *len,
+//                          uint8_t **data) {
 
-  LOG_DBG("HID Report.");
+//   LOG_DBG("HID Report.");
 
-  return 0;
-}
+//   return 0;
+// }
 
-static struct hid_ops fake_ops = {
-    .get_report = get_report_cb,
-};
+// static struct hid_ops fake_ops = {
+//     .get_report = get_report_cb,
+// };
 
 static int zmk_usb_os_detector_init(void) {
 #if IS_ENABLED(CONFIG_SETTINGS)
@@ -114,12 +114,12 @@ static int zmk_usb_os_detector_init(void) {
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_OS_LAYER_DETECT_VIA_USB)
-  const struct device *hid_dev; //= device_get_binding("HID_0");
+  // const struct device *hid_dev; //= device_get_binding("HID_0");
 
-  if (!device_is_ready(hid_dev)) {
-    LOG_ERR("HID Device is not ready");
-    return -EIO;
-  }
+  // if (!device_is_ready(hid_dev)) {
+  //   LOG_ERR("HID Device is not ready");
+  //   return -EIO;
+  // }
 
   // usb_hid_register_device(hid_dev, hid_report_desc, sizeof(hid_report_desc),
   //   &fake_ops);
