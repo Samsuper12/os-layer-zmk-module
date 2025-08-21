@@ -165,4 +165,4 @@ static int zmk_usb_os_detector_init(void) {
 }
 
 SYS_INIT(zmk_usb_os_detector_init, APPLICATION,
-         CONFIG_KERNEL_INIT_PRIORITY_DEFAULT);
+         CONFIG_APPLICATION_INIT_PRIORITY);
