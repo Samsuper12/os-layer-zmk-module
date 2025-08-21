@@ -121,8 +121,8 @@ static int zmk_usb_os_detector_init(void) {
     return -EIO;
   }
 
-  ret = hid_device_register(hid_dev, zmk_hid_report_desc,
-                            sizeof(zmk_hid_report_desc), &fake_ops);
+  ret = usb_hid_register_device(hid_dev, zmk_hid_report_desc,
+                                sizeof(zmk_hid_report_desc), &fake_ops);
   if (ret != 0) {
     LOG_ERR("Failed to register HID Device, %d", ret);
     return ret;
