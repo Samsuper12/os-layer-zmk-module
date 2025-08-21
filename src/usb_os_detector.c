@@ -21,6 +21,37 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 static enum zmk_os_type preferred_os_type = ZMK_OS_OTHER;
 
+#define HID_MOUSE_REPORT_DESC(bcnt)                                            \
+  {                                                                            \
+      HID_USAGE_PAGE(HID_USAGE_GEN_DESKTOP),                                   \
+      HID_USAGE(HID_USAGE_GEN_DESKTOP_MOUSE),                                  \
+      HID_COLLECTION(HID_COLLECTION_APPLICATION),                              \
+      HID_USAGE(HID_USAGE_GEN_DESKTOP_POINTER),                                \
+      HID_COLLECTION(                                                          \
+          HID_COLLECTION_PHYSICAL), /* Bits used for button signalling */      \
+      HID_USAGE_PAGE(HID_USAGE_GEN_BUTTON),                                    \
+      HID_USAGE_MIN8(1),                                                       \
+      HID_USAGE_MAX8(bcnt),                                                    \
+      HID_LOGICAL_MIN8(0),                                                     \
+      HID_LOGICAL_MAX8(1),                                                     \
+      HID_REPORT_SIZE(1),                                                      \
+      HID_REPORT_COUNT(bcnt), /* HID_INPUT (Data,Var,Abs) */                   \
+      HID_INPUT(0x02),        /* Unused bits */                                \
+      HID_REPORT_SIZE(8 - bcnt),                                               \
+      HID_REPORT_COUNT(1), /* HID_INPUT (Cnst,Ary,Abs) */                      \
+      HID_INPUT(1),        /* X and Y axis, scroll */                          \
+      HID_USAGE_PAGE(HID_USAGE_GEN_DESKTOP),                                   \
+      HID_USAGE(HID_USAGE_GEN_DESKTOP_X),                                      \
+      HID_USAGE(HID_USAGE_GEN_DESKTOP_Y),                                      \
+      HID_USAGE(HID_USAGE_GEN_DESKTOP_WHEEL),                                  \
+      HID_LOGICAL_MIN8(-127),                                                  \
+      HID_LOGICAL_MAX8(127),                                                   \
+      HID_REPORT_SIZE(8),                                                      \
+      HID_REPORT_COUNT(3), /* HID_INPUT (Data,Var,Rel) */                      \
+      HID_INPUT(0x06),                                                         \
+      HID_END_COLLECTION,                                                      \
+      HID_END_COLLECTION,                                                      \
+  }
 
 #if IS_ENABLED(CONFIG_SETTINGS)
 static void os_type_save_preferred_work(struct k_work *work) {
@@ -92,21 +123,21 @@ int zmk_calc_next_os_type(int i) {
 
 //-----------------------------------------------------------------------------//
 
-//static bool fake_hid_shutdown = false;
-//static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(2);
+static bool fake_hid_shutdown = false;
+static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(2);
 
-// static int get_report_cb(const struct device *dev,
-//                          struct usb_setup_packet *setup, int32_t *len,
-//                          uint8_t **data) {
+static int get_report_cb(const struct device *dev,
+                         struct usb_setup_packet *setup, int32_t *len,
+                         uint8_t **data) {
 
-//   LOG_DBG("HID Report.");
+  LOG_DBG("HID Report.");
 
-//   return 0;
-// }
+  return 0;
+}
 
-// static struct hid_ops fake_ops = {
-//     .get_report = get_report_cb,
-// };
+static struct hid_ops fake_ops = {
+    .get_report = get_report_cb,
+};
 
 static int zmk_usb_os_detector_init(void) {
 #if IS_ENABLED(CONFIG_SETTINGS)
@@ -114,17 +145,18 @@ static int zmk_usb_os_detector_init(void) {
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_OS_LAYER_DETECT_VIA_USB)
-  // const struct device *hid_dev; //= device_get_binding("HID_0");
+  const struct device *hid_dev;
+  = device_get_binding("HID_0");
 
-  // if (!device_is_ready(hid_dev)) {
-  //   LOG_ERR("HID Device is not ready");
-  //   return -EIO;
-  // }
+  if (!device_is_ready(hid_dev)) {
+    LOG_ERR("HID Device is not ready");
+    return -EIO;
+  }
 
-  // usb_hid_register_device(hid_dev, hid_report_desc, sizeof(hid_report_desc),
-  //   &fake_ops);
+  usb_hid_register_device(hid_dev, hid_report_desc, sizeof(hid_report_desc),
+                          &fake_ops);
 
-  // usb_hid_init(hid_dev);
+  usb_hid_init(hid_dev);
 
 #endif
 
