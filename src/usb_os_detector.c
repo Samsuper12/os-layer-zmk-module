@@ -152,10 +152,10 @@ static int zmk_usb_os_detector_init(void) {
     return -EIO;
   }
 
-  usb_hid_register_device(hid_dev, hid_report_desc, sizeof(hid_report_desc),
+  //usb_hid_register_device(hid_dev, hid_report_desc, sizeof(hid_report_desc),
                           &fake_ops);
 
-  usb_hid_init(hid_dev);
+  //usb_hid_init(hid_dev);
 
 #endif
 
