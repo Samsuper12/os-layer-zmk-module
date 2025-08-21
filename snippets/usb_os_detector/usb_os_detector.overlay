@@ -8,7 +8,7 @@
 / {
 	hid_dev_1: hid_dev_1 {
 		compatible = "zephyr,hid-device";
-		label = "HID1";
+		label = "HID2";
 		protocol-code = "none";
 		in-polling-period-us = <1000>;
 		in-report-size = <64>;
