@@ -145,8 +145,7 @@ static int zmk_usb_os_detector_init(void) {
 #endif
 
 #if IS_ENABLED(CONFIG_ZMK_OS_LAYER_DETECT_VIA_USB)
-  const struct device *hid_dev;
-  = device_get_binding("HID_0");
+  const struct device *hid_dev = device_get_binding("HID_0");
 
   if (!device_is_ready(hid_dev)) {
     LOG_ERR("HID Device is not ready");
