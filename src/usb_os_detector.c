@@ -21,37 +21,6 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 static enum zmk_os_type preferred_os_type = ZMK_OS_OTHER;
 
-#define HID_MOUSE_REPORT_DESC(bcnt)                                            \
-  {                                                                            \
-      HID_USAGE_PAGE(HID_USAGE_GEN_DESKTOP),                                   \
-      HID_USAGE(HID_USAGE_GEN_DESKTOP_MOUSE),                                  \
-      HID_COLLECTION(HID_COLLECTION_APPLICATION),                              \
-      HID_USAGE(HID_USAGE_GEN_DESKTOP_POINTER),                                \
-      HID_COLLECTION(                                                          \
-          HID_COLLECTION_PHYSICAL), /* Bits used for button signalling */      \
-      HID_USAGE_PAGE(HID_USAGE_GEN_BUTTON),                                    \
-      HID_USAGE_MIN8(1),                                                       \
-      HID_USAGE_MAX8(bcnt),                                                    \
-      HID_LOGICAL_MIN8(0),                                                     \
-      HID_LOGICAL_MAX8(1),                                                     \
-      HID_REPORT_SIZE(1),                                                      \
-      HID_REPORT_COUNT(bcnt), /* HID_INPUT (Data,Var,Abs) */                   \
-      HID_INPUT(0x02),        /* Unused bits */                                \
-      HID_REPORT_SIZE(8 - bcnt),                                               \
-      HID_REPORT_COUNT(1), /* HID_INPUT (Cnst,Ary,Abs) */                      \
-      HID_INPUT(1),        /* X and Y axis, scroll */                          \
-      HID_USAGE_PAGE(HID_USAGE_GEN_DESKTOP),                                   \
-      HID_USAGE(HID_USAGE_GEN_DESKTOP_X),                                      \
-      HID_USAGE(HID_USAGE_GEN_DESKTOP_Y),                                      \
-      HID_USAGE(HID_USAGE_GEN_DESKTOP_WHEEL),                                  \
-      HID_LOGICAL_MIN8(-127),                                                  \
-      HID_LOGICAL_MAX8(127),                                                   \
-      HID_REPORT_SIZE(8),                                                      \
-      HID_REPORT_COUNT(3), /* HID_INPUT (Data,Var,Rel) */                      \
-      HID_INPUT(0x06),                                                         \
-      HID_END_COLLECTION,                                                      \
-      HID_END_COLLECTION,                                                      \
-  }
 
 #if IS_ENABLED(CONFIG_SETTINGS)
 static void os_type_save_preferred_work(struct k_work *work) {
