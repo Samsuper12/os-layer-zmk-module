@@ -124,7 +124,7 @@ int zmk_calc_next_os_type(int i) {
 //-----------------------------------------------------------------------------//
 
 static bool fake_hid_shutdown = false;
-static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(2);
+//static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(2);
 
 static int get_report_cb(const struct device *dev,
                          struct usb_setup_packet *setup, int32_t *len,
