@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+// bridge.os ["Request"]
+
+package bridge.os;
+
+enum OsType {
+  LINUX = 0;
+  MAC = 1;
+  WIN = 2;
+
+  OTHER = 20;
+};
+
+
+message Request {
+    oneof  request_type {
+        OsType set_current_os = 1;
+    }
+}
