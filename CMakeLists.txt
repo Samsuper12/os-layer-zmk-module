@@ -9,6 +9,5 @@ zephyr_library_sources(src/behaviors/behavior_os_mod.c)
 
 if (CONFIG_ZMK_BRIDGE)
     zephyr_library_sources(src/bridge_handler.c)
-    zephyr_include_directories(${CMAKE_CURRENT_BINARY_DIR}/proto)
-    zephyr_library_link_libraries(bridge-zmk-module)
+    add_dependencies(os-layer-zmk-module bridge-zmk-module)
 endif()
