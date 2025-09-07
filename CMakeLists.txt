@@ -7,3 +7,5 @@ zephyr_library_sources(src/behaviors/behavior_os_selector.c)
 zephyr_library_sources(src/behaviors/behavior_os_mod.c)
 
 zephyr_library_sources_ifdef(CONFIG_ZMK_BRIDGE src/bridge_handler.c)
+
+zephyr_library_link_libraries(bridge-zmk-module)
