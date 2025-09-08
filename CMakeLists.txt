@@ -1,5 +1,5 @@
 zephyr_include_directories(include)
-zephyr_library()
+zephyr_library_named(os-layer-zmk-module)
 
 zephyr_library_sources(src/usb_os_detector.c)
 zephyr_library_sources(src/events/preferred_os_state_changed.c)
