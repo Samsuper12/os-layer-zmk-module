@@ -10,6 +10,7 @@
 #include <zephyr/sys/util.h>
 #include <zmk/behavior.h>
 #include <zmk/bridge.h>
+#include <zmk/events/position_state_changed.h>
 #include <zmk/os_layer.h>
 #include <zmk/virtual_key_position.h>
 
