@@ -6,7 +6,7 @@ This can be useful for handling differences between Linux, macOS, and Windows ke
 ---
 
 ## Features
-- Detects the host OS (WIP) and adjusts key output accordingly.  
+- Detects the host OS (via [Bridge](https://github.com/Samsuper12/bridge-zmk-module)) and adjusts key output accordingly.  
 - Provides a flexible layer for defining OS-specific keymaps.  
 ---
 
