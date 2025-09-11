@@ -17,7 +17,7 @@
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #define OS_SEL_NODE DT_NODELABEL(os_sel)
-const struct device *os_sel_dev = DEVICE_DT_GET(OS_SEL_NODE);
+static const struct device *os_sel_dev = DEVICE_DT_GET(OS_SEL_NODE);
 
 static struct zmk_behavior_binding behavior = {
     .behavior_dev = NULL,
@@ -32,7 +32,7 @@ bridge_Response set_current_os(const bridge_Request *req) {
   }
 
   struct zmk_behavior_binding_event event = {
-      .position = ZMK_VIRTUAL_KEY_POSITION_COMBO(1),
+      .position = 0,
       .timestamp = k_uptime_get(),
 #if IS_ENABLED(CONFIG_ZMK_SPLIT)
       .source = ZMK_POSITION_STATE_CHANGE_SOURCE_LOCAL,
@@ -44,6 +44,7 @@ bridge_Response set_current_os(const bridge_Request *req) {
 
   zmk_behavior_invoke_binding(&behavior, event, true);
   k_msleep(2);
+  event.timestamp = k_uptime_get();
   zmk_behavior_invoke_binding(&behavior, event, false);
 
   return BRIDGE_RESPONSE_SIMPLE(true);
