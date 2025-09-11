@@ -38,14 +38,19 @@ bridge_Response set_current_os(const bridge_Request *req) {
       .source = ZMK_POSITION_STATE_CHANGE_SOURCE_LOCAL,
 #endif
   };
-
+  uint16_t os_layer = req->subsystem.os.request_type.set_current_os;
   behavior.behavior_dev = os_sel_dev;
-  behavior.param1 = req->subsystem.os.request_type.set_current_os;
+  behavior.param1 = os_layer;
+  zmk_select_preferred_os_type(os_layer);
+  // zmk_behavior_invoke_binding(&behavior, event, true);
 
-  zmk_behavior_invoke_binding(&behavior, event, true);
+  zmk_split_central_invoke_behavior(ZMK_POSITION_STATE_CHANGE_SOURCE_LOCAL,
+                                    &behavior, event, true);
   k_msleep(2);
   event.timestamp = k_uptime_get();
-  zmk_behavior_invoke_binding(&behavior, event, false);
+  zmk_split_central_invoke_behavior(ZMK_POSITION_STATE_CHANGE_SOURCE_LOCAL,
+                                    &behavior, event, false);
+  // zmk_behavior_invoke_binding(&behavior, event, false);
 
   return BRIDGE_RESPONSE_SIMPLE(true);
 }
