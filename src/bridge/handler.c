@@ -28,7 +28,7 @@ static struct zmk_behavior_binding behavior = {
 bridge_Response set_current_os(const bridge_Request *req) {
 
   if (!device_is_ready(os_sel_dev)) {
-    LOG_ERR("Can't find OS_SEL node!");
+    LOG_ERR("The OS_SEL node cannot be found!");
   }
 
   struct zmk_behavior_binding_event event = {
@@ -42,15 +42,16 @@ bridge_Response set_current_os(const bridge_Request *req) {
   behavior.behavior_dev = os_sel_dev;
   behavior.param1 = os_layer;
   zmk_select_preferred_os_type(os_layer);
-  // zmk_behavior_invoke_binding(&behavior, event, true);
 
+  // In this case, the event (keypress) should be sent to all parts of the
+  // keyboard.
+  // Common events such as 'raise_' cannot do this.
   zmk_split_central_invoke_behavior(ZMK_POSITION_STATE_CHANGE_SOURCE_LOCAL,
                                     &behavior, event, true);
   k_msleep(2);
   event.timestamp = k_uptime_get();
   zmk_split_central_invoke_behavior(ZMK_POSITION_STATE_CHANGE_SOURCE_LOCAL,
                                     &behavior, event, false);
-  // zmk_behavior_invoke_binding(&behavior, event, false);
 
   return BRIDGE_RESPONSE_SIMPLE(true);
 }

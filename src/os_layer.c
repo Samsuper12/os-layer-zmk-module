@@ -85,15 +85,12 @@ int zmk_calc_next_os_type(int i) {
   return preferred_os_type + i;
 }
 
-static int zmk_usb_os_detector_init(void) {
+static int os_layer_init(void) {
 #if IS_ENABLED(CONFIG_SETTINGS)
   k_work_init_delayable(&os_type_save_work, os_type_save_preferred_work);
 #endif
 
-  // TODO: make fake HID; read wLength. Destroy fake HID.
-
   return 0;
 }
 
-SYS_INIT(zmk_usb_os_detector_init, APPLICATION,
-         CONFIG_APPLICATION_INIT_PRIORITY);
+SYS_INIT(os_layer_init, APPLICATION, CONFIG_APPLICATION_INIT_PRIORITY);

@@ -61,6 +61,16 @@ manifest:
     };
 };
 ```
+## Bridge usage
+The module supports communication with PC via [Bridge-CLI](https://github.com/Samsuper12/zmk-bridge-cli).
+
+### Request
+- `set_current_os: <index>`
+
+### Example
+```zmk-bridge.py os --cmd "set_current_os: 1"```
+
+
 ## OS-Selector node
 With it you can manually change the preferred OS layer using the `&os_sel` node that can accept these arguments:
 
